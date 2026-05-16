@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The e-Fuels Illusion — A Critical Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:       #1a1208;
+    --paper:     #f5f0e8;
+    --warm:      #f0e6cc;
+    --accent:    #b5341a;
+    --accent2:   #2a5c8a;
+    --muted:     #6b5e4e;
+    --rule:      #c8b89a;
+    --highlight: #fff3cd;
+    --mono-bg:   #1e1a14;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── POSTER / HERO ─────────────────────────────────── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    overflow: hidden;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(181,52,26,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(181,52,26,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-circle {
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(181,52,26,0.2);
+    animation: spin 40s linear infinite;
+  }
+  .hero-circle::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(181,52,26,0.15);
+  }
+  .hero-circle::after {
+    content: '';
+    position: absolute;
+    inset: 100px;
+    border-radius: 50%;
+    border: 1px solid rgba(181,52,26,0.1);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-formula {
+    position: absolute;
+    top: 40px; left: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(245,240,232,0.18);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 60px 70px;
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 86px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 44px;
+    line-height: 1.4;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(245,240,232,0.15);
+    padding-top: 28px;
+  }
+  .meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.5);
+  }
+  .meta-item span {
+    display: block;
+    color: rgba(245,240,232,0.85);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .hero-tag-strip {
+    position: absolute;
+    top: 0; right: 0;
+    writing-mode: vertical-rl;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.2);
+    padding: 24px 14px;
+    border-left: 1px solid rgba(245,240,232,0.08);
+  }
+
+  /* ── PAPER BAND ────────────────────────────────────── */
+  .paper-band {
+    background: var(--accent);
+    color: var(--paper);
+    padding: 14px 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .paper-band a {
+    color: inherit;
+    opacity: 0.75;
+    text-decoration: none;
+    transition: opacity .2s;
+  }
+  .paper-band a:hover { opacity: 1; }
+
+  /* ── BODY LAYOUT ───────────────────────────────────── */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  section {
+    padding: 72px 0 0;
+  }
+
+  /* ── SECTION HEADERS ───────────────────────────────── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 22px; }
+
+  /* ── DROPCAP ───────────────────────────────────────── */
+  .dropcap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 5.4em;
+    font-weight: 900;
+    float: left;
+    line-height: 0.78;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+
+  /* ── ABSTRACT BOX ──────────────────────────────────── */
+  .abstract-box {
+    background: var(--warm);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin: 48px 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .abstract-box strong {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* ── CRITIQUE CARDS ────────────────────────────────── */
+  .critique-list {
+    list-style: none;
+    margin: 36px 0;
+  }
+  .critique-list li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .critique-list li:first-child {
+    border-top: 1px solid var(--rule);
+  }
+  .critique-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-top: 4px;
+  }
+  .critique-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .critique-body p {
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #3a2e22;
+    line-height: 1.7;
+  }
+
+  /* ── CALLOUT / PULL QUOTE ──────────────────────────── */
+  .pull-quote {
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 28px 0;
+    margin: 52px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── DATA HIGHLIGHT ────────────────────────────────── */
+  .data-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 48px 0;
+    background: var(--rule);
+  }
+  .data-cell {
+    background: var(--paper);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .data-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .data-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ── CODE BLOCK ────────────────────────────────────── */
+  .code-block {
+    background: var(--mono-bg);
+    color: #d4c9b0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    padding: 28px 32px;
+    margin: 36px 0;
+    border-radius: 2px;
+    overflow-x: auto;
+  }
+  .code-block .c-red   { color: #e07070; }
+  .code-block .c-grn   { color: #7dbd7d; }
+  .code-block .c-ylw   { color: #d4a96a; }
+  .code-block .c-blu   { color: #7ab8d4; }
+  .code-block .c-muted { color: #6b6050; }
+
+  /* ── VERDICT BOX ───────────────────────────────────── */
+  .verdict {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 40px;
+    margin: 64px 0 0;
+  }
+  .verdict .section-label { color: var(--accent); }
+  .verdict .section-label::after { background: rgba(245,240,232,0.2); }
+  .verdict h2 { color: var(--paper); }
+  .verdict p  { color: rgba(245,240,232,0.8); }
+  .verdict .verdict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 36px;
+    background: rgba(245,240,232,0.1);
+  }
+  .verdict-cell {
+    background: var(--ink);
+    padding: 24px;
+  }
+  .verdict-cell h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .verdict-cell.pro h4  { color: #7dbd7d; }
+  .verdict-cell.con h4  { color: var(--accent); }
+  .verdict-cell ul {
+    list-style: none;
+    font-size: 14px;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.8;
+  }
+  .verdict-cell ul li::before {
+    content: '— ';
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .verdict-cell.pro ul li::before { color: #7dbd7d; }
+  .verdict-cell.con ul li::before { color: var(--accent); }
+
+  /* ── FOOTER ────────────────────────────────────────── */
+  footer {
+    background: var(--warm);
+    border-top: 1px solid var(--rule);
+    padding: 40px 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 80px;
+  }
+
+  /* ── UTILITY ───────────────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 56px 0 0;
+  }
+
+  mark {
+    background: var(--highlight);
+    padding: 0 3px;
+  }
+
+  @media (max-width: 640px) {
+    .hero-content { padding: 40px 24px 50px; }
+    .container { padding: 0 24px; }
+    .data-strip { grid-template-columns: 1fr; }
+    .verdict .verdict-grid { grid-template-columns: 1fr; }
+    .paper-band { padding: 14px 24px; }
+    footer { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     HERO POSTER
+══════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-circle"></div>
+  <div class="hero-tag-strip">Technical Commentary · Energy & Fuels · 2026</div>
+
+  <div class="hero-formula">
+    CO₂ + H₂ → ? <br>
+    RGibbs → ΔG_min → "Products" <br>
+    Catalyst selectivity → ignored <br>
+    Heat of reaction → assumed away <br>
+    Recycle streams → not modelled <br>
+    H₂ recovery → uncounted <br>
+    Separation → one flash block <br>
+    ──────────────────────────── <br>
+    ∴ α &gt; 1 ← "viable" ?
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-label">Technical Critique · Peer Review Commentary</div>
+    <h1 class="hero-title">The <em>e-Fuels</em><br>Illusion</h1>
+    <p class="hero-subtitle">
+      When thermodynamic optimism masquerades<br>as techno-economic analysis
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        REVIEWING
+        <span>Amorim et al., Energy &amp; Fuels 2026</span>
+      </div>
+      <div class="meta-item">
+        DOI
+        <span>10.1021/acs.energyfuels.6c00395</span>
+      </div>
+      <div class="meta-item">
+        CRITIQUE BY
+        <span>Chemical &amp; Process Engineer</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="paper-band">
+  <span>Reviewed: Amorim, Faria, Rocha · Energy &amp; Fuels 2026, 40, 10335–10347</span>
+  <a href="https://doi.org/10.1021/acs.energyfuels.6c00395" target="_blank">↗ Read Original Paper</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     BODY
+══════════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- ── INTRODUCTION ── -->
+  <section>
+    <div class="section-label">§ 01 — Introduction</div>
+    <h2>A paper born from ambition, not engineering</h2>
+
+    <p class="dropcap">
+      The Paris Agreement set a deadline, not a methodology. In the decade since, a peculiar category of research has proliferated: studies that demonstrate <em>thermodynamic permission</em> for a process — that nature does not forbid it — and then present this as evidence of industrial viability. The paper under review, "The Potential of CO₂ Hydrogenation to Produce e-Fuels" (Amorim, Faria &amp; Rocha, <em>Energy &amp; Fuels</em>, 2026), sits squarely in this category.
+    </p>
+
+    <p>
+      To be clear about what the paper does and does not do: it simulates an equilibrium reactor in Aspen Plus V14, sweeps temperature, pressure, and H₂/CO₂ ratios across 12 potential e-fuels, computes a rentability parameter α, and — for the three cases where α exceeds 1 — constructs a simplified cash flow model. The authors are transparent about what they omit: no heat integration, no recycle streams, no catalyst costs, no purification. They frame the work as a "preliminary screening study."
+    </p>
+
+    <p>
+      That framing is fair. What is less fair is the paper's title, which promises a techno-economic analysis, and its abstract, which highlights that "gasoline shows potential rentability under both best- and worst-case conditions." By the time a reader reaches Table 10 — buried on page 10 — they find that e-gasoline must sell at <mark>52% above conventional gasoline prices</mark> to break even, and e-diesel at <mark>142% above fossil diesel</mark>. That is the real finding. Everything else is scaffolding.
+    </p>
+  </section>
+
+
+  <!-- ── WHAT THE PAPER DOES ── -->
+  <section>
+    <div class="section-label">§ 02 — Paper Overview</div>
+    <h2>What the study set out to do</h2>
+
+    <div class="abstract-box">
+      <strong>Scope:</strong> Twelve e-fuels (methane through diesel, methanol, ethanol, butanol, DME) evaluated for thermodynamic feasibility and economic viability via CO₂ hydrogenation using green H₂. Simulated in Aspen Plus V14 using an RGibbs equilibrium reactor under varying T (150–450 °C), P (1–100 bar), and H₂/CO₂ ratios (1–5). A subsequent integrated flowsheet added compression, heat exchange, and a flash separator to estimate OPEX, then CAPEX for the three α &gt; 1 cases.
+    </div>
+
+    <p>
+      The study's comparative intent is legitimate. Running every fuel through the same flowsheet under consistent assumptions produces a fair relative ranking. Gasoline emerging as the most promising e-fuel candidate is consistent with its high market price (€2.09/kg) and moderate H₂ stoichiometry. The sensitivity analysis linking profitability to a halving of hydrogen costs — aligned with 2050 green hydrogen price forecasts — is the paper's genuinely useful contribution.
+    </p>
+
+    <div class="data-strip">
+      <div class="data-cell">
+        <div class="data-val">12</div>
+        <div class="data-label">e-fuels evaluated</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-val">α=1.47</div>
+        <div class="data-label">Best case: e-gasoline rentability</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-val">+142%</div>
+        <div class="data-label">Price premium needed for e-diesel viability</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── TECHNICAL CRITIQUE ── -->
+  <section>
+    <div class="section-label">§ 03 — Technical Critique</div>
+    <h2>Six faults that undermine the analysis</h2>
+
+    <p>
+      Each omission below is individually defensible as a simplification. Together, they compound into an OPEX and CAPEX estimate that is systematically and substantially too optimistic — meaning every α value in the paper is inflated, and the three cases that clear α &gt; 1 may not do so under realistic assumptions.
+    </p>
+
+    <ul class="critique-list">
+
+      <li>
+        <div class="critique-num">01 /</div>
+        <div class="critique-body">
+          <h4>RGibbs gives a ceiling, not a result</h4>
+          <p>
+            The Gibbs free energy minimisation reactor assumes the system reaches full thermodynamic equilibrium — the best possible conversion at a given T and P, with infinite residence time and perfect selectivity. Real CO₂ hydrogenation is a kinetically controlled process. Catalyst selectivity, active site coverage, poisoning, and mass transfer limitations all determine what actually comes out of the reactor. Fischer-Tropsch product distributions follow Anderson-Schulz-Flory statistics — a chain-growth probability that favours lighter hydrocarbons — not the Gibbs minimum. For gasoline-range (C₆) and diesel-range (C₉) targets, the gap between equilibrium prediction and real catalyst output is not marginal. It is the entire engineering challenge. Presenting RGibbs outputs as yield estimates in a techno-economic analysis conflates a thermodynamic bound with an engineering outcome.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="critique-num">02 /</div>
+        <div class="critique-body">
+          <h4>Isothermal reactor — energy cost unaccounted</h4>
+          <p>
+            The authors assume constant-temperature reactor operation but do not account for the energy cost of maintaining it. The reactions in Table 2 are exothermic, some intensely so (FTS to paraffins, Sabatier at −165 kJ/mol, DME at −123 kJ/mol). Removing this heat requires cooling circuits, intercoolers, or steam generation. In a full OPEX model, reactor thermal management contributes meaningfully to utility costs and can represent significant additional CAPEX for heat exchange area. The paper states that "reactor energy expenses were not considered, as previous techno-economic analysis has shown the energy required is negligible." This justification applies to the energy cost of <em>maintaining</em> temperature in mildly exothermic systems where heat is recovered — not to the gross heat duty of highly exothermic synthesis reactions operated isothermally without heat integration.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="critique-num">03 /</div>
+        <div class="critique-body">
+          <h4>No recycle streams — hydrogen loss uncosted</h4>
+          <p>
+            Green hydrogen at €3/kg is the paper's own identified dominant cost driver. Single-pass CO₂ conversion, even at best-case conditions, leaves unreacted hydrogen in the outlet. The paper acknowledges hydrogen recycle was excluded to preserve "comparability" between cases, but this creates a paradox: the economic analysis penalises hydrogen feedstock cost while ignoring that a meaningful fraction of that feedstock exits unreacted. In a real plant, unreacted H₂ must be either recycled (requiring a compressor and separator — additional CAPEX and OPEX) or vented/flared (a cost and an emissions problem). Neither option is free. Excluding recycle also means the α parameter is computed against a hydrogen consumption rate that overstates how much is actually converted to product.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="critique-num">04 /</div>
+        <div class="critique-body">
+          <h4>Separation modelled as a single flash block</h4>
+          <p>
+            Product recovery is modelled using a single equilibrium flash separator. In practice, separating a reactor effluent containing C₁–C₉ hydrocarbons, water, CO₂, CO, and unreacted H₂ requires a distillation train, potentially a pressure swing adsorption unit for H₂/CO₂ separation, and fuel-specific finishing steps (hydrotreatment for diesel-range waxes, isomerisation for gasoline octane specification). The paper itself notes that "compatibility with existing motors requires e-gasoline and e-kerosene to respect composition requirements" — a constraint that cannot be met by a flash block. The CAPEX estimate of €1.4–1.5M for three compressors, a reactor, heat exchangers, and a condenser is not a plant cost. It is the cost of a handful of unit operations in a plant that would in reality be an order of magnitude larger.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="critique-num">05 /</div>
+        <div class="critique-body">
+          <h4>Hydrogen provenance never specified</h4>
+          <p>
+            The paper sets hydrogen cost at €3/kg — described as "the lower limit of the reported European production cost range" — but never states what process produces this hydrogen, how it is delivered, or what its carbon intensity is. This matters because the entire rationale for e-fuel production is carbon neutrality. If the H₂ is produced by steam methane reforming (gray hydrogen, currently ~€1.5–2/kg), the carbon argument for the e-fuels collapses. If it is electrolytic green hydrogen (currently €3–7/kg in Europe), the economic case is even harder than the paper models. The €3/kg figure appears to be green hydrogen at an optimistic end — but the paper does not state this. A techno-economic analysis that does not pin its feedstock to a production pathway cannot make credible sustainability claims.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="critique-num">06 /</div>
+        <div class="critique-body">
+          <h4>N₂ dilution — energy cost inconsistently handled</h4>
+          <p>
+            The integrated approach feeds flue gas (80 vol% N₂, 20 vol% CO₂) through a multi-stage compression train alongside pure H₂. N₂ is correctly excluded from yield calculations as an inert, but its presence in the compression train is real — 200 kmol/h of N₂ at 250 kmol/h total flue gas flow is being compressed from 1 bar to up to 100 bar alongside the reactive species. The compression duty reported implicitly includes compressing this inert load. Yet the OPEX comparison is normalised per kg of e-fuel produced, meaning the compression cost is allocated entirely against productive output, without acknowledgement that a pre-separation step (PSA, membrane, or absorber) to remove N₂ before compression would substantially reduce this duty — but would itself carry CAPEX and OPEX. The current treatment neither models pre-separation nor correctly allocates the N₂ compression penalty.
+          </p>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+
+  <!-- ── PULL QUOTE ── -->
+  <div class="pull-quote">
+    "Thermodynamics has never been the bottleneck for any industrial process. The question is never <em>can nature permit this</em> — it is always <em>can engineering make it pay</em>."
+    <cite>— From this critique</cite>
+  </div>
+
+
+  <!-- ── WHAT'S MISSING IN CODE ── -->
+  <section>
+    <div class="section-label">§ 04 — The Missing Engineering</div>
+    <h2>What a complete model would require</h2>
+
+    <p>
+      Consider what a minimal but defensible e-gasoline plant model looks like versus what the paper models. The gap is not cosmetic:
+    </p>
+
+    <div class="code-block">
+<span class="c-muted">/* Paper's model */</span>
+Feed (CO₂ + H₂ + N₂)
+  → <span class="c-ylw">Compressor train</span>          <span class="c-muted">✓ included</span>
+  → <span class="c-ylw">Feed heater/cooler</span>        <span class="c-muted">✓ included</span>
+  → <span class="c-red">RGibbs reactor (isothermal)</span>  <span class="c-muted">✗ no kinetics, no heat duty</span>
+  → <span class="c-ylw">Valve (pressure drop)</span>      <span class="c-muted">✓ included</span>
+  → <span class="c-red">Flash separator</span>            <span class="c-muted">✗ not a distillation column</span>
+  → <span class="c-grn">Product</span>                    <span class="c-muted">✓ costed at market price</span>
+
+<span class="c-muted">/* Minimum realistic model */</span>
+Feed (CO₂ + H₂ + N₂)
+  → <span class="c-grn">N₂/CO₂ pre-separator</span>      <span class="c-muted">+ CAPEX + OPEX</span>
+  → <span class="c-grn">Compressor train (smaller)</span>  <span class="c-muted">lower duty, less cost</span>
+  → <span class="c-grn">Feed heater</span>
+  → <span class="c-grn">Kinetic reactor (non-isothermal)</span> <span class="c-muted">+ cooling circuit</span>
+  → <span class="c-grn">Heat recovery (HEN)</span>        <span class="c-muted">reduces utility cost</span>
+  → <span class="c-grn">H₂/CO recycle loop</span>         <span class="c-muted">+ recycle compressor + PSA</span>
+  → <span class="c-grn">CO₂ recycle loop</span>           <span class="c-muted">+ absorber/compressor</span>
+  → <span class="c-grn">Distillation train</span>         <span class="c-muted">C₁/C₂ rejection, C₆ cut</span>
+  → <span class="c-grn">Hydrotreatment / isomerisation</span> <span class="c-muted">fuel spec compliance</span>
+  → <span class="c-grn">Product</span>
+    </div>
+
+    <p>
+      The analogy that comes to mind: modelling ammonia synthesis as N₂ + H₂ → NH₃ in a Gibbs reactor, noting that ΔG is negative at high pressure, and concluding that ammonia production is economically viable — without a Haber-Bosch reactor, recycle compressor, or separation column. Thermodynamics permits it. Engineering makes it happen. The two are not the same claim.
+    </p>
+  </section>
+
+
+  <!-- ── BROADER CONTEXT ── -->
+  <section>
+    <div class="section-label">§ 05 — The Broader Problem</div>
+    <h2>Publication pressure and net-zero urgency</h2>
+
+    <p>
+      This paper is not an isolated case. It reflects a structural problem in how net-zero research is being produced and reviewed. The urgency of the 2050 decarbonisation target has created enormous institutional demand for publications demonstrating progress — or at least demonstrating possibility. RGibbs reactor studies are efficient to produce: Aspen Plus has a built-in block, sensitivity analysis is automated, and a twelve-fuel comparison generates enough figures and tables for a full journal article.
+    </p>
+
+    <p>
+      The result is a growing literature of what might be called <em>thermodynamic existence proofs</em> — papers that show a reaction pathway is not thermodynamically forbidden, dress the result in economic language, and submit. Peer review does not always catch this, partly because the omissions are declared openly (which makes them appear deliberate) and partly because reviewers in energy economics may not be process engineers, and vice versa.
+    </p>
+
+    <p>
+      The cost is real. Research funding, graduate student time, and editorial bandwidth are finite. A preliminary screening study that occupies journal space and cites its own α &gt; 1 finding in the abstract draws attention away from the work that would actually move e-fuels from concept to plant: detailed kinetic modelling, catalyst lifetime studies under industrial conditions, rigorous heat integration design, and full process simulation with recycle. We have until 2050, not 2500. The engineering needs to start now, and it starts by being honest about what Aspen Plus's RGibbs block can and cannot tell us.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── VERDICT ── -->
+  <div class="verdict">
+    <div class="section-label">§ 06 — Verdict</div>
+    <h2>What this paper contributes, and what it does not</h2>
+
+    <p>
+      The honest finding of this study is stark: under current hydrogen pricing, no e-fuel produced by CO₂ hydrogenation is economically viable. E-gasoline becomes viable if and only if hydrogen prices fall to €1–2/kg — prices not expected until 2040–2050 — or if e-fuel selling prices far exceed their fossil equivalents. That is a useful, if unsurprising, conclusion. It deserved a clearer headline.
+    </p>
+
+    <div class="verdict-grid">
+      <div class="verdict-cell pro">
+        <h4>What holds up</h4>
+        <ul>
+          <li>Consistent comparative framework across 12 fuels</li>
+          <li>Sensitivity to H₂ price is the most policy-relevant finding</li>
+          <li>Thermodynamic trends (T, P, H₂/CO₂ ratio effects) are correctly captured</li>
+          <li>Transparent about omissions — recycle, heat integration, separation</li>
+          <li>Table 10 (minimum selling prices) is the honest result</li>
+        </ul>
+      </div>
+      <div class="verdict-cell con">
+        <h4>What does not</h4>
+        <ul>
+          <li>RGibbs ≠ kinetically realistic reactor — yields are theoretical ceilings</li>
+          <li>Isothermal operation without heat duty is an incomplete OPEX model</li>
+          <li>No H₂ recycle — the dominant cost driver partially exits unreacted</li>
+          <li>Flash separation cannot deliver fuel-specification products</li>
+          <li>CAPEX at €1.4–1.5M excludes most real plant costs</li>
+          <li>H₂ provenance (green vs. gray) never established</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <span>Technical Commentary · Written May 2026</span>
+  <span>Reviewing: DOI 10.1021/acs.energyfuels.6c00395</span>
+  <span>Chemical &amp; Process Engineering Perspective</span>
+</footer>
+
+</body>
+</html>
